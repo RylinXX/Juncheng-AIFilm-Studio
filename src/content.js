@@ -89,25 +89,33 @@ export const siteContent = {
       title: '品牌宣传片',
       audience: '企业品牌、产业园区、机构发布',
       delivery: '创意脚本、分镜方案、成片包装、多渠道版本',
-      aiValue: '缩短前期创意验证周期，提升多版本生产效率'
+      aiValue: '缩短前期创意验证周期，提升多版本生产效率',
+      visual: './public/assets/solutions/brand-film.png',
+      visualAlt: '品牌宣传片 AI 商业影像场景'
     },
     {
       title: '广告视觉',
       audience: '消费品牌、活动营销、产品发布',
       delivery: '视觉概念、影像素材、短视频广告、社媒切条',
-      aiValue: '快速探索多种视觉方向，降低试错成本'
+      aiValue: '快速探索多种视觉方向，降低试错成本',
+      visual: './public/assets/solutions/ad-visual.png',
+      visualAlt: '广告视觉 AI 影像生成场景'
     },
     {
       title: '虚拟人物内容',
       audience: '品牌 IP、知识内容、直播与短视频账号',
       delivery: '人设方案、脚本模板、视觉资产、内容样片',
-      aiValue: '把虚拟人物从形象资产推进到持续内容生产'
+      aiValue: '把虚拟人物从形象资产推进到持续内容生产',
+      visual: './public/assets/solutions/virtual-human.png',
+      visualAlt: '虚拟人物内容 AI 制作场景'
     },
     {
       title: '短剧/短视频矩阵',
       audience: '内容团队、MCN、商业宣发项目',
       delivery: '内容结构、分镜模板、批量剪辑包装、渠道适配',
-      aiValue: '提高系列化内容产出速度和风格一致性'
+      aiValue: '提高系列化内容产出速度和风格一致性',
+      visual: './public/assets/solutions/short-video-matrix.png',
+      visualAlt: '短剧短视频矩阵 AI 剪辑场景'
     }
   ],
   caseStudies: [

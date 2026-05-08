@@ -83,6 +83,26 @@ test('renderSite outputs a richer animated agent cockpit preview', () => {
   assert.doesNotMatch(html, /class="pipeline-console"/);
 });
 
+test('renderSite enriches commercial solutions with generated visuals', () => {
+  const html = renderSite(siteContent);
+  const expectedVisuals = [
+    ['./public/assets/solutions/brand-film.png', '品牌宣传片 AI 商业影像场景'],
+    ['./public/assets/solutions/ad-visual.png', '广告视觉 AI 影像生成场景'],
+    ['./public/assets/solutions/virtual-human.png', '虚拟人物内容 AI 制作场景'],
+    ['./public/assets/solutions/short-video-matrix.png', '短剧短视频矩阵 AI 剪辑场景']
+  ];
+
+  for (const [src, alt] of expectedVisuals) {
+    assert.match(
+      html,
+      new RegExp(`<img src="${src.replaceAll('.', '\\.')}" alt="${alt}" loading="lazy" \\/>`)
+    );
+  }
+
+  assert.match(html, /class="solution-visual"/);
+  assert.match(html, /class="solution-body"/);
+});
+
 test('renderSite escapes adversarial text and attribute content', () => {
   const html = renderSite(createAdversarialContent());
   assert.doesNotMatch(html, /<script>/i);

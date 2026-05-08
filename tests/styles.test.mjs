@@ -27,6 +27,15 @@ test('styles use the selected image logo and a restrained hero headline scale', 
   assert.doesNotMatch(css, /6\.8rem/);
 });
 
+test('styles keep the hero Agent word and primary CTA visually intact', async () => {
+  const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.hero-title-accent \{[\s\S]*display: inline-block/);
+  assert.match(css, /\.hero-title-accent \{[\s\S]*padding-right: 0\.14em/);
+  assert.match(css, /\.hero-title-accent \{[\s\S]*letter-spacing: -0\.035em/);
+  assert.match(css, /\.button-primary \{[\s\S]*linear-gradient\(135deg, #1d8fe9 0%, var\(--blue\) 52%, #82d4ff 100%\)/);
+  assert.doesNotMatch(css, /\.button-primary \{[\s\S]*linear-gradient\(135deg, var\(--ink\), var\(--blue\)\)/);
+});
+
 test('styles include generated hero assets and advanced cockpit motion', async () => {
   const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
   assert.match(css, /cinematic-light-ribbon\.png/);
@@ -38,6 +47,16 @@ test('styles include generated hero assets and advanced cockpit motion', async (
   assert.match(css, /@keyframes previewScan/);
   assert.doesNotMatch(css, /hero-ai-cockpit\.png/);
   assert.doesNotMatch(css, /hero-backdrop-art/);
+});
+
+test('styles make commercial solutions a balanced image-led grid', async () => {
+  const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.solution-grid \{\n  display: grid;\n  grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.solution-visual \{/);
+  assert.match(css, /aspect-ratio: 16 \/ 10/);
+  assert.match(css, /\.solution-visual img \{/);
+  assert.match(css, /object-fit: cover/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*\.solution-grid \{\n    grid-template-columns: 1fr;\n  \}/);
 });
 
 test('styles constrain the hero and cockpit proportions across viewports', async () => {

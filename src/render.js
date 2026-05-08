@@ -164,10 +164,15 @@ const renderSolutions = (content) => `
         .map(
           (item) => `
             <article class="solution-card">
-              <h3>${escapeHtml(item.title)}</h3>
-              <p><strong>适用场景：</strong>${escapeHtml(item.audience)}</p>
-              <p><strong>交付内容：</strong>${escapeHtml(item.delivery)}</p>
-              <p><strong>AI 提效点：</strong>${escapeHtml(item.aiValue)}</p>
+              <div class="solution-visual">
+                <img src="${escapeHtml(item.visual)}" alt="${escapeHtml(item.visualAlt)}" loading="lazy" />
+              </div>
+              <div class="solution-body">
+                <h3>${escapeHtml(item.title)}</h3>
+                <p><strong>适用场景：</strong>${escapeHtml(item.audience)}</p>
+                <p><strong>交付内容：</strong>${escapeHtml(item.delivery)}</p>
+                <p><strong>AI 提效点：</strong>${escapeHtml(item.aiValue)}</p>
+              </div>
             </article>
           `
         )
