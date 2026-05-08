@@ -38,3 +38,19 @@ export const validateDemoRequest = (input) => {
 
 export const formatDemoSuccess = (data) =>
   `已收到预约请求。我们会围绕「${data.company}」的合作需求准备 AI 影视能力演示，并通过 ${data.contact} 尽快联系你。`;
+
+export const handleDemoSubmit = ({ form, message, data }) => {
+  const result = validateDemoRequest(data);
+
+  message.classList.remove('is-error', 'is-success');
+  if (!result.valid) {
+    message.textContent = result.message;
+    message.classList.add('is-error');
+    return result;
+  }
+
+  message.textContent = formatDemoSuccess(result.data);
+  message.classList.add('is-success');
+  form.reset();
+  return result;
+};
