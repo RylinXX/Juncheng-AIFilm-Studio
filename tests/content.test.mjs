@@ -15,8 +15,43 @@ test('qualifications name the three content credentials specifically', () => {
 
 test('copy keeps high-tech certification and cases compliant', () => {
   const serialized = JSON.stringify(siteContent);
+  const forbiddenAbsoluteClaims = [
+    '行业第一',
+    '唯一',
+    '已获批',
+    '最强',
+    '最佳',
+    '顶级',
+    '领先',
+    '100%',
+    '保证',
+    '第一'
+  ];
+  const forbiddenHighTechClaims = [
+    '国家高新技术企业认证已',
+    '已通过国家高新技术企业认证',
+    '国家高新技术企业认证通过',
+    '已获国家高新技术企业认证',
+    '获得国家高新技术企业认证'
+  ];
+  const publicClientFields = ['client', 'customer', 'clientName', 'customerName'];
+
   assert.match(serialized, /国家高新技术企业认证申报筹备中/);
-  assert.doesNotMatch(serialized, /国家高新技术企业认证已/);
-  assert.doesNotMatch(serialized, /行业第一|唯一|已获批/);
-  assert.ok(siteContent.caseStudies.every((item) => item.anonymous === true));
+
+  for (const claim of forbiddenAbsoluteClaims) {
+    assert.doesNotMatch(serialized, new RegExp(claim), `copy must not include ${claim}`);
+  }
+
+  for (const claim of forbiddenHighTechClaims) {
+    assert.doesNotMatch(serialized, new RegExp(claim), `copy must not include ${claim}`);
+  }
+
+  for (const item of siteContent.caseStudies) {
+    assert.equal(item.anonymous, true);
+    assert.match(item.title, /某/);
+
+    for (const field of publicClientFields) {
+      assert.equal(Object.hasOwn(item, field), false, `case study must not expose ${field}`);
+    }
+  }
 });
