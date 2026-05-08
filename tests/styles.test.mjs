@@ -27,6 +27,13 @@ test('styles use the selected image logo and a restrained hero headline scale', 
   assert.doesNotMatch(css, /6\.8rem/);
 });
 
+test('styles keep section titles below hero headline scale', async () => {
+  const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /h2 \{\n  max-width: 780px;\n  font-size: clamp\(1\.75rem, 3\.2vw, 3\.2rem\);\n  line-height: 1\.08;\n  letter-spacing: -0\.04em;\n\}/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*h2 \{\n    font-size: clamp\(1\.7rem, 7vw, 2\.05rem\);\n  \}/);
+  assert.doesNotMatch(css, /font-size: clamp\(2rem, 5vw, 4\.5rem\)/);
+});
+
 test('styles keep the hero Agent word and primary CTA visually intact', async () => {
   const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
   assert.match(css, /\.hero-title-accent \{[\s\S]*display: inline-block/);
