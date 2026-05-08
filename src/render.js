@@ -162,6 +162,13 @@ const renderCases = (content) => `
   </section>
 `;
 
+const demoFieldConfigs = [
+  { name: 'name', autocomplete: 'name' },
+  { name: 'company', autocomplete: 'organization' },
+  { name: 'contact', autocomplete: 'email' },
+  { name: 'need', multiline: true }
+];
+
 const renderDemo = (content) => `
   <section class="section-shell demo-section" id="demo">
     <div>
@@ -171,22 +178,26 @@ const renderDemo = (content) => `
       <p class="demo-fallback">${escapeHtml(content.demo.fallback)}</p>
     </div>
     <form class="demo-form" novalidate>
-      <label>
-        <span>姓名</span>
-        <input name="name" autocomplete="name" />
-      </label>
-      <label>
-        <span>公司</span>
-        <input name="company" autocomplete="organization" />
-      </label>
-      <label>
-        <span>联系方式</span>
-        <input name="contact" autocomplete="email" />
-      </label>
-      <label>
-        <span>合作需求</span>
-        <textarea name="need" rows="4"></textarea>
-      </label>
+      ${demoFieldConfigs
+        .map((field, index) => {
+          const label = content.demo.fields[index] ?? '';
+          if (field.multiline) {
+            return `
+              <label>
+                <span>${escapeHtml(label)}</span>
+                <textarea name="${escapeHtml(field.name)}" rows="4"></textarea>
+              </label>
+            `;
+          }
+
+          return `
+            <label>
+              <span>${escapeHtml(label)}</span>
+              <input name="${escapeHtml(field.name)}" autocomplete="${escapeHtml(field.autocomplete)}" />
+            </label>
+          `;
+        })
+        .join('')}
       <button class="button button-primary" type="submit">${escapeHtml(content.hero.primaryCta)}</button>
       <p class="form-message" role="status" aria-live="polite"></p>
     </form>
