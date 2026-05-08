@@ -25,10 +25,10 @@ body {
   min-width: 320px;
   color: var(--ink);
   background:
-    url("../public/assets/cinematic-light-ribbon.png") center top / 1200px auto no-repeat,
-    radial-gradient(circle at 12% 8%, rgba(58, 168, 255, 0.2), transparent 30rem),
-    radial-gradient(circle at 88% 18%, rgba(217, 239, 255, 0.9), transparent 28rem),
-    linear-gradient(180deg, #f9fcff 0%, #edf6ff 42%, #f7fbff 100%);
+    url("../public/assets/cinematic-light-ribbon.png") center top / 1280px auto no-repeat,
+    radial-gradient(circle at 14% 8%, rgba(58, 168, 255, 0.26), transparent 28rem),
+    radial-gradient(circle at 92% 10%, rgba(54, 150, 226, 0.28), transparent 32rem),
+    linear-gradient(180deg, #050b13 0%, #071421 760px, #edf6ff 760px, #f7fbff 100%);
 }
 
 a {
@@ -96,22 +96,29 @@ a {
   padding: 88px 0;
 }
 
+main {
+  margin-top: -96px;
+}
+
 .hero {
   position: relative;
   display: grid;
-  min-height: min(720px, calc(100svh - 132px));
-  grid-template-columns: minmax(0, 0.92fr) minmax(340px, 0.78fr);
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.72fr);
   gap: clamp(28px, 5vw, 58px);
   align-items: center;
-  margin-top: 20px;
-  padding: clamp(28px, 4.5vw, 46px);
-  border: 1px solid rgba(151, 213, 255, 0.28);
-  border-radius: 42px;
+  margin-top: 0;
+  padding: calc(clamp(36px, 5vw, 64px) + 112px) max(20px, calc((100vw - 1180px) / 2)) clamp(36px, 5vw, 64px);
+  border: 0;
+  border-radius: 0;
   color: white;
   background:
-    linear-gradient(102deg, rgba(5, 13, 23, 0.96) 0%, rgba(7, 20, 33, 0.9) 43%, rgba(7, 20, 33, 0.62) 100%),
-    url("../public/assets/hero-ai-cockpit.png") right center / cover no-repeat;
-  box-shadow: 0 34px 110px rgba(5, 38, 68, 0.26);
+    radial-gradient(circle at 68% 22%, rgba(58, 168, 255, 0.22), transparent 28rem),
+    radial-gradient(circle at 15% 48%, rgba(92, 190, 255, 0.16), transparent 25rem),
+    linear-gradient(102deg, rgba(5, 13, 23, 0.99) 0%, rgba(7, 20, 33, 0.97) 50%, rgba(8, 28, 49, 0.98) 100%);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -124,17 +131,6 @@ a {
     radial-gradient(circle at 16% 20%, rgba(91, 188, 255, 0.22), transparent 22rem),
     linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 36%);
   pointer-events: none;
-}
-
-.hero-backdrop-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 72% center;
-  opacity: 0.18;
-  mix-blend-mode: screen;
 }
 
 .hero-grid {
@@ -800,6 +796,8 @@ h3 {
 
   .hero {
     min-height: auto;
+    width: 100%;
+    max-width: none;
   }
 
   .agent-cockpit {
@@ -828,13 +826,8 @@ h3 {
 
   .hero {
     min-height: auto;
-    padding: 28px 18px;
-    border-radius: 30px;
-    background-position: 64% center;
-  }
-
-  .hero-backdrop-art {
-    object-position: 64% center;
+    padding: 120px 18px 28px;
+    border-radius: 0;
   }
 
   h1 {

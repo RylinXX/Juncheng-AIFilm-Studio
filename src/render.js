@@ -48,7 +48,6 @@ const renderNav = (content) => `
 
 const renderHero = (content) => `
   <section class="hero section-shell" id="hero">
-    <img class="hero-backdrop-art" src="./public/assets/hero-ai-cockpit.png" alt="" aria-hidden="true" />
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
     <div class="hero-orb hero-orb-two" aria-hidden="true"></div>

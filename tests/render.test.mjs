@@ -65,7 +65,8 @@ test('renderSite uses the selected image logo asset instead of text initials', (
 
 test('renderSite uses generated hero assets and editorial title spans', () => {
   const html = renderSite(siteContent);
-  assert.match(html, /<img class="hero-backdrop-art" src="\.\/public\/assets\/hero-ai-cockpit\.png" alt="" aria-hidden="true" \/>/);
+  assert.doesNotMatch(html, /hero-backdrop-art/);
+  assert.doesNotMatch(html, /hero-ai-cockpit\.png/);
   assert.match(html, /<span class="hero-title-kicker">自研影视<\/span>/);
   assert.match(html, /<span class="hero-title-accent">Agent<\/span>/);
   assert.match(html, /<span class="hero-title-tail">流程<\/span>/);

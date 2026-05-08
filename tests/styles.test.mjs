@@ -29,7 +29,6 @@ test('styles use the selected image logo and a restrained hero headline scale', 
 
 test('styles include generated hero assets and advanced cockpit motion', async () => {
   const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
-  assert.match(css, /hero-ai-cockpit\.png/);
   assert.match(css, /cinematic-light-ribbon\.png/);
   assert.match(css, /\.hero-title-accent/);
   assert.match(css, /\.agent-cockpit/);
@@ -37,15 +36,23 @@ test('styles include generated hero assets and advanced cockpit motion', async (
   assert.match(css, /@keyframes orbitPulse/);
   assert.match(css, /@keyframes routeDash/);
   assert.match(css, /@keyframes previewScan/);
+  assert.doesNotMatch(css, /hero-ai-cockpit\.png/);
+  assert.doesNotMatch(css, /hero-backdrop-art/);
 });
 
 test('styles constrain the hero and cockpit proportions across viewports', async () => {
   const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
-  assert.match(css, /min-height: min\(720px, calc\(100svh - 132px\)\)/);
-  assert.match(css, /grid-template-columns: minmax\(0, 0\.92fr\) minmax\(340px, 0\.78fr\)/);
+  assert.match(css, /main \{\n  margin-top: -96px;\n\}/);
+  assert.match(css, /width: 100%/);
+  assert.match(css, /max-width: none/);
+  assert.match(css, /min-height: 100svh/);
+  assert.match(css, /grid-template-columns: minmax\(0, 0\.9fr\) minmax\(340px, 0\.72fr\)/);
+  assert.match(css, /padding: calc\(clamp\(36px, 5vw, 64px\) \+ 112px\) max\(20px, calc\(\(100vw - 1180px\) \/ 2\)\) clamp\(36px, 5vw, 64px\)/);
+  assert.match(css, /border-radius: 0/);
   assert.match(css, /height: min\(620px, calc\(100svh - 190px\)\)/);
   assert.match(css, /aspect-ratio: 0\.8 \/ 1/);
-  assert.match(css, /object-position: 72% center/);
   assert.match(css, /height: auto/);
   assert.doesNotMatch(css, /min-height: calc\(100vh - 84px\)/);
+  assert.doesNotMatch(css, /min-height: calc\(100svh - 96px\)/);
+  assert.doesNotMatch(css, /min-height: min\(720px, calc\(100svh - 132px\)\)/);
 });
