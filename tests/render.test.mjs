@@ -63,6 +63,25 @@ test('renderSite uses the selected image logo asset instead of text initials', (
   assert.doesNotMatch(html, /<span class="brand-mark">JC<\/span>/);
 });
 
+test('renderSite uses generated hero assets and editorial title spans', () => {
+  const html = renderSite(siteContent);
+  assert.match(html, /<img class="hero-backdrop-art" src="\.\/public\/assets\/hero-ai-cockpit\.png" alt="" aria-hidden="true" \/>/);
+  assert.match(html, /<span class="hero-title-kicker">自研影视<\/span>/);
+  assert.match(html, /<span class="hero-title-accent">Agent<\/span>/);
+  assert.match(html, /<span class="hero-title-tail">流程<\/span>/);
+  assert.match(html, /<span class="hero-title-line">驱动商业影像智能化生产<\/span>/);
+});
+
+test('renderSite outputs a richer animated agent cockpit preview', () => {
+  const html = renderSite(siteContent);
+  assert.match(html, /class="agent-cockpit"/);
+  assert.match(html, /<img class="storyboard-art" src="\.\/public\/assets\/storyboard-agent-collage\.png" alt="" aria-hidden="true" \/>/);
+  assert.match(html, /class="cockpit-orbit cockpit-orbit-one"/);
+  assert.match(html, /class="signal-path signal-path-one"/);
+  assert.match(html, /class="cockpit-status"/);
+  assert.doesNotMatch(html, /class="pipeline-console"/);
+});
+
 test('renderSite escapes adversarial text and attribute content', () => {
   const html = renderSite(createAdversarialContent());
   assert.doesNotMatch(html, /<script>/i);

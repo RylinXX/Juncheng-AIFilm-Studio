@@ -6,6 +6,29 @@ const escapeHtml = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
 
+const renderHeroTitle = (title) => {
+  const rawTitle = String(title);
+  const [lead, agentRest] = rawTitle.split('Agent');
+
+  if (!agentRest) {
+    return `<h1 class="hero-title">${escapeHtml(rawTitle)}</h1>`;
+  }
+
+  const [flowLabel, tailLabel] = agentRest.split('，');
+  const kicker = lead.replace(/^用/, '').trim();
+
+  return `
+      <h1 class="hero-title" aria-label="${escapeHtml(rawTitle)}">
+        <span class="hero-title-line">
+          <span class="hero-title-kicker">${escapeHtml(kicker)}</span>
+          <span class="hero-title-accent">Agent</span>
+          <span class="hero-title-tail">${escapeHtml(flowLabel.trim())}</span>
+        </span>
+        <span class="hero-title-line">${escapeHtml((tailLabel ?? '').trim())}</span>
+      </h1>
+    `;
+};
+
 const renderNav = (content) => `
   <header class="site-header">
     <a class="brand" href="#hero" aria-label="${escapeHtml(content.company.name)}">
@@ -25,12 +48,13 @@ const renderNav = (content) => `
 
 const renderHero = (content) => `
   <section class="hero section-shell" id="hero">
+    <img class="hero-backdrop-art" src="./public/assets/hero-ai-cockpit.png" alt="" aria-hidden="true" />
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
     <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
     <div class="hero-copy">
       <p class="eyebrow">${escapeHtml(content.hero.eyebrow)}</p>
-      <h1>${escapeHtml(content.hero.title)}</h1>
+      ${renderHeroTitle(content.hero.title)}
       <p class="hero-description">${escapeHtml(content.hero.description)}</p>
       <div class="hero-actions">
         <a class="button button-primary" href="#demo">${escapeHtml(content.hero.primaryCta)}</a>
@@ -46,21 +70,37 @@ const renderHero = (content) => `
               </div>
             `
           )
-          .join('')}
+        .join('')}
       </dl>
     </div>
-    <div class="pipeline-console" aria-label="影视 Agent 流程预览">
-      <div class="console-topline">
-        <span>Agent Pipeline</span>
-        <span>Live Preview</span>
+    <div class="agent-cockpit" aria-label="影视 Agent 动态驾驶舱">
+      <div class="cockpit-shell" aria-hidden="true">
+        <span class="cockpit-orbit cockpit-orbit-one"></span>
+        <span class="cockpit-orbit cockpit-orbit-two"></span>
+        <span class="signal-path signal-path-one"></span>
+        <span class="signal-path signal-path-two"></span>
       </div>
-      <div class="console-beam" aria-hidden="true"></div>
+      <div class="cockpit-topline">
+        <span>Agent Command</span>
+        <span>Live Render</span>
+      </div>
+      <div class="storyboard-preview">
+        <img class="storyboard-art" src="./public/assets/storyboard-agent-collage.png" alt="" aria-hidden="true" />
+        <span class="preview-scan" aria-hidden="true"></span>
+        <div class="cockpit-status">
+          <span>镜头规划</span>
+          <strong>同步中</strong>
+        </div>
+      </div>
       ${content.pipeline
         .map(
           (item, index) => `
-            <article class="console-node" style="--node-index: ${index}">
+            <article class="agent-card" style="--node-index: ${index}">
               <span>${escapeHtml(item.step)}</span>
-              <strong>${escapeHtml(item.title)}</strong>
+              <div>
+                <strong>${escapeHtml(item.title)}</strong>
+                <small>${escapeHtml(item.text)}</small>
+              </div>
             </article>
           `
         )
