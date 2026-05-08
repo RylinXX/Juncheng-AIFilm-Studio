@@ -56,6 +56,13 @@ test('renderSite includes primary conversion and compliance wording', () => {
   assert.doesNotMatch(html, /国家高新技术企业认证已通过/);
 });
 
+test('renderSite uses the selected image logo asset instead of text initials', () => {
+  const html = renderSite(siteContent);
+  assert.match(html, /<img class="brand-logo" src="\.\/public\/assets\/logo-jc-b\.png"/);
+  assert.match(html, /alt="北京君成时代科技有限公司 logo"/);
+  assert.doesNotMatch(html, /<span class="brand-mark">JC<\/span>/);
+});
+
 test('renderSite escapes adversarial text and attribute content', () => {
   const html = renderSite(createAdversarialContent());
   assert.doesNotMatch(html, /<script>/i);

@@ -9,7 +9,7 @@ const escapeHtml = (value) =>
 const renderNav = (content) => `
   <header class="site-header">
     <a class="brand" href="#hero" aria-label="${escapeHtml(content.company.name)}">
-      <span class="brand-mark">JC</span>
+      <img class="brand-logo" src="./public/assets/logo-jc-b.png" alt="${escapeHtml(content.company.name)} logo" />
       <span>
         <strong>${escapeHtml(content.company.shortName)}</strong>
         <small>${escapeHtml(content.company.englishName)}</small>
