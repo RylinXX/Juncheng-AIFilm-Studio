@@ -1,13 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { validateDemoRequest, formatDemoSuccess, handleDemoSubmit } from '../src/contact.js';
+import { wireDemoForm } from '../src/main.js';
 
 const createSubmitTarget = (initialClasses = []) => {
   const classes = new Set(initialClasses);
+  const listeners = new Map();
   let resetCount = 0;
 
   return {
     form: {
+      addEventListener: (type, listener) => {
+        listeners.set(type, listener);
+      },
+      dispatchSubmit: (event) => {
+        listeners.get('submit')?.(event);
+      },
       reset: () => {
         resetCount += 1;
       },
@@ -92,6 +100,50 @@ test('handleDemoSubmit shows success and resets valid forms exactly once', () =>
     }
   });
 
+  assert.equal(target.message.classList.contains('is-success'), true);
+  assert.equal(target.message.classList.contains('is-error'), false);
+  assert.match(target.message.textContent, /合作伙伴公司/);
+  assert.match(target.message.textContent, /partner@example\.com/);
+  assert.equal(target.form.resetCount, 1);
+});
+
+test('wireDemoForm prevents submit defaults and applies validation outcomes', () => {
+  const target = createSubmitTarget(['is-success']);
+  let submitData = { name: '张三', company: '', contact: '', need: '' };
+  const formDataFactory = () => ({
+    entries: () => Object.entries(submitData)
+  });
+
+  wireDemoForm({ ...target, formDataFactory });
+
+  let prevented = false;
+  target.form.dispatchSubmit({
+    preventDefault: () => {
+      prevented = true;
+    }
+  });
+
+  assert.equal(prevented, true);
+  assert.equal(target.message.classList.contains('is-error'), true);
+  assert.equal(target.message.classList.contains('is-success'), false);
+  assert.match(target.message.textContent, /请填写公司、联系方式和合作需求/);
+  assert.equal(target.form.resetCount, 0);
+
+  submitData = {
+    name: '李四',
+    company: '合作伙伴公司',
+    contact: 'partner@example.com',
+    need: '预约演示'
+  };
+  prevented = false;
+
+  target.form.dispatchSubmit({
+    preventDefault: () => {
+      prevented = true;
+    }
+  });
+
+  assert.equal(prevented, true);
   assert.equal(target.message.classList.contains('is-success'), true);
   assert.equal(target.message.classList.contains('is-error'), false);
   assert.match(target.message.textContent, /合作伙伴公司/);

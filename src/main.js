@@ -2,15 +2,24 @@ import { siteContent } from './content.js';
 import { renderSite } from './render.js';
 import { handleDemoSubmit } from './contact.js';
 
-const app = document.querySelector('#app');
-app.innerHTML = renderSite(siteContent);
+export const wireDemoForm = ({ form, message, formDataFactory = (currentForm) => new FormData(currentForm) }) => {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = formDataFactory(form);
+    const data = Object.fromEntries(formData.entries());
+    handleDemoSubmit({ form, message, data });
+  });
+};
 
-const form = document.querySelector('.demo-form');
-const message = document.querySelector('.form-message');
+export const bootSite = (documentLike) => {
+  const app = documentLike.querySelector('#app');
+  app.innerHTML = renderSite(siteContent);
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-  handleDemoSubmit({ form, message, data });
-});
+  const form = documentLike.querySelector('.demo-form');
+  const message = documentLike.querySelector('.form-message');
+  wireDemoForm({ form, message });
+};
+
+if (typeof document !== 'undefined') {
+  bootSite(document);
+}
