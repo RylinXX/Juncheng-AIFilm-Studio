@@ -1,1 +1,17 @@
+.DS_Store
 .superpowers/
+.openclaw/
+
+# Local agent/workspace files, not part of the xingtian.net showcase site.
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+output/
+/*.png
+/*.csv
+
+# Separate application repo. Keep it out of the showcase-site repository.
+ai-interview-boss-mail/
